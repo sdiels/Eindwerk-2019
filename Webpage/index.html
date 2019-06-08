@@ -6,6 +6,11 @@
     
 </head>
 <style>
+    @font-face {
+      font-family: 'futura';
+      src: url('Assets/futura.ttf');
+    }
+    
     body { 
     margin: 0; 
     height: 100vh;
@@ -14,9 +19,43 @@
 canvas { 
     display: block;
 }
+    #overlay {
+        position: absolute;
+        z-index: 100;
+        width: 20%;
+        font-family: 'futura', sans-serif;
+    }
+    #overlay img {
+        width: 75%;
+    }
+    #overlay h2, #overlay h1 {
+        font-weight: bold;
+        margin: 0 0 5px 24%;
+    }
+    #overlay h2 {
+        font-size: 40px;
+    }
+    #overlay h1 {
+        font-size: 80px;
+        line-height: 70px;
+    }
+    
+    #shadow {
+        position: absolute;
+        bottom: 0;
+        left: 30%;
+        width: 40%;
+        opacity: 0.3;
+    }
     
 </style>
 <body>
+  <div id="overlay">
+      <img src="assets/logo.png" alt="logo">
+      <h2>LD WAFFLE</h2>
+      <h1>AVAILABLE NOW</h1>
+  </div>
+  <img id="shadow" src="assets/shadow.png" alt="shadow">
    
    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.js"></script>
    <script src="https://threejsfundamentals.org/threejs/resources/threejs/r105/js/controls/OrbitControls.js"></script>
@@ -25,18 +64,21 @@ canvas {
    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
    
    <script>
+       //SET BASIC VARIABLES FOR VIEWPORT
         var scene = new THREE.Scene();
         var clock = new THREE.Clock();
 
         var camera = new THREE.PerspectiveCamera(20,window.innerWidth/window.innerHeight,0.1,1000)
-        camera.position.z = 5;
+        camera.position.z = 6;
         
         var renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setClearColor("#e5e5e5");
+        renderer.toneMappingExposure = 1.7;
         renderer.setSize(window.innerWidth,window.innerHeight);
 
         document.body.appendChild(renderer.domElement);
 
+       //VIEWPORT RESIZING
         window.addEventListener('resize', () => {
             renderer.setSize(window.innerWidth,window.innerHeight);
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -46,17 +88,16 @@ canvas {
 
         var geometry = new THREE.BoxGeometry(1, 1, 1);
         var material = new THREE.MeshLambertMaterial({color: 0xF7F7F7});
-        //var mesh = new THREE.Mesh(geometry, material);
        
+       //VARIABLES
        var root, pivot;
-       var clips;
-       let swoosh;
        var hovered = false;
        
        const domEvents	= new THREEx.DomEvents(camera, renderer.domElement);
        var mixer;
        var animations;
        
+       //LOAD GLTF MODEL
        const gltfLoader = new THREE.GLTFLoader();
         gltfLoader.load('model_anim.glb', (gltf) => {
             root = gltf.scene;
@@ -76,14 +117,16 @@ canvas {
             }, false);
         });
 
-        var light = new THREE.PointLight(0xFFFFFF, 1, 1000)
+       //LIGHTING
+        var light = new THREE.PointLight(0xFFFFFF, 1, 300)
         light.position.set(0,0,0);
         scene.add(light);
 
-        var light = new THREE.PointLight(0xFFFFFF, 2, 1000)
-        light.position.set(0,0,25);
+        var light = new THREE.PointLight(0xFFFFFF, 2, 500)
+        light.position.set(0,1,15);
         scene.add(light);
 
+       //RENDER FUNCTION
         var render = function(deltaSeconds) {
             var delta = clock.getDelta();
             
@@ -96,7 +139,7 @@ canvas {
                 if (hovered == true) {
                     animations.forEach( function ( clip ) {
                         
-                        if(mixer.clipAction(clip).time >= 2.4) {
+                        if(mixer.clipAction(clip).time >= 2.3) {
                             mixer.clipAction( clip ).timeScale = 0;
                         }else{
                             mixer.clipAction( clip ).play();
@@ -106,7 +149,7 @@ canvas {
                     } );
                 }else {
                     animations.forEach( function ( clip ) {
-                        if(mixer.clipAction(clip).time <= 0.1) {
+                        if(mixer.clipAction(clip).time <= 0.2) {
                             mixer.clipAction( clip ).timeScale = 0;
                         }else{
                             mixer.clipAction( clip ).play();
