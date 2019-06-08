@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike Webpage</title>
+    
+</head>
+<style>
+    body { 
+    margin: 0; 
+    height: 100vh;
+}
+  
+canvas { 
+    display: block;
+}
+    
+</style>
+<body>
+   
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.js"></script>
+   <script src="https://threejsfundamentals.org/threejs/resources/threejs/r105/js/controls/OrbitControls.js"></script>
+   <script src="GLTFLoader.js"></script>
+   <script src="threex.domevents.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+   
+   <script>
+        var scene = new THREE.Scene();
+        var clock = new THREE.Clock();
+
+        var camera = new THREE.PerspectiveCamera(20,window.innerWidth/window.innerHeight,0.1,1000)
+        camera.position.z = 5;
+        
+        var renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setClearColor("#e5e5e5");
+        renderer.setSize(window.innerWidth,window.innerHeight);
+
+        document.body.appendChild(renderer.domElement);
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth,window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+
+            camera.updateProjectionMatrix();
+        })
+
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        var material = new THREE.MeshLambertMaterial({color: 0xF7F7F7});
+        //var mesh = new THREE.Mesh(geometry, material);
+       
+       var root, pivot;
+       var clips;
+       let swoosh;
+       var hovered = false;
+       
+       const domEvents	= new THREEx.DomEvents(camera, renderer.domElement);
+       var mixer;
+       var animations;
+       
+       const gltfLoader = new THREE.GLTFLoader();
+        gltfLoader.load('model_anim.glb', (gltf) => {
+            root = gltf.scene;
+            root.position.set(0, -0.4, 0.5);
+            pivot = new THREE.Object3D();
+            pivot.add( root );
+            scene.add( pivot );
+            
+            mixer = new THREE.AnimationMixer(pivot);
+            animations = gltf.animations;
+                     
+            domEvents.addEventListener(root.getObjectByName('upper'), 'mouseover', function(event){
+	           hovered = true;
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('upper'), 'mouseout', function(event){
+	           hovered = false;
+            }, false);
+        });
+
+        var light = new THREE.PointLight(0xFFFFFF, 1, 1000)
+        light.position.set(0,0,0);
+        scene.add(light);
+
+        var light = new THREE.PointLight(0xFFFFFF, 2, 1000)
+        light.position.set(0,0,25);
+        scene.add(light);
+
+        var render = function(deltaSeconds) {
+            var delta = clock.getDelta();
+            
+            requestAnimationFrame(render);
+            
+            if(mixer && animations) {
+                mixer.update(delta);
+                
+                console.log(mixer.clipAction( animations[0] ).time);
+                if (hovered == true) {
+                    animations.forEach( function ( clip ) {
+                        
+                        if(mixer.clipAction(clip).time >= 2.4) {
+                            mixer.clipAction( clip ).timeScale = 0;
+                        }else{
+                            mixer.clipAction( clip ).play();
+                            mixer.clipAction( clip ).timeScale = 5;
+                        }
+                        
+                    } );
+                }else {
+                    animations.forEach( function ( clip ) {
+                        if(mixer.clipAction(clip).time <= 0.1) {
+                            mixer.clipAction( clip ).timeScale = 0;
+                        }else{
+                            mixer.clipAction( clip ).play();
+                            mixer.clipAction( clip ).timeScale = -5;
+                        }
+                    } );
+                }
+            }
+            if (pivot) {
+                pivot.rotation.y += 0.01;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        render();
+    </script>
+</body>
+
+</html>
