@@ -14,6 +14,7 @@
     body { 
     margin: 0; 
     height: 100vh;
+    font-family: 'futura', sans-serif;
 }
   
 canvas { 
@@ -23,7 +24,6 @@ canvas {
         position: absolute;
         z-index: 100;
         width: 20%;
-        font-family: 'futura', sans-serif;
     }
     #overlay img {
         width: 75%;
@@ -33,11 +33,11 @@ canvas {
         margin: 0 0 5px 24%;
     }
     #overlay h2 {
-        font-size: 40px;
+        font-size: 25px;
     }
     #overlay h1 {
-        font-size: 80px;
-        line-height: 70px;
+        font-size: 90px;
+        line-height: 80px;
     }
     
     #shadow {
@@ -47,15 +47,21 @@ canvas {
         width: 40%;
         opacity: 0.3;
     }
+    h3 {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
     
 </style>
 <body>
   <div id="overlay">
       <img src="assets/logo.png" alt="logo">
-      <h2>LD WAFFLE</h2>
-      <h1>AVAILABLE NOW</h1>
+      <h2>RELEASING SOON</h2>
+      <h1>NOTIFY ME</h1>
   </div>
   <img id="shadow" src="assets/shadow.png" alt="shadow">
+  <h3 id="info">test</h3>
    
    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.js"></script>
    <script src="https://threejsfundamentals.org/threejs/resources/threejs/r105/js/controls/OrbitControls.js"></script>
@@ -99,7 +105,7 @@ canvas {
        
        //LOAD GLTF MODEL
        const gltfLoader = new THREE.GLTFLoader();
-        gltfLoader.load('model_anim.glb', (gltf) => {
+        gltfLoader.load('model_anim2.glb', (gltf) => {
             root = gltf.scene;
             root.position.set(0, -0.4, 0.5);
             pivot = new THREE.Object3D();
@@ -109,12 +115,31 @@ canvas {
             mixer = new THREE.AnimationMixer(pivot);
             animations = gltf.animations;
                      
+            //SET HOVER ACTIONS
             domEvents.addEventListener(root.getObjectByName('upper'), 'mouseover', function(event){
 	           hovered = true;
             }, false);
             domEvents.addEventListener(root.getObjectByName('upper'), 'mouseout', function(event){
 	           hovered = false;
             }, false);
+            
+            domEvents.addEventListener(root.getObjectByName('top'), 'mouseover', function(event){
+	           document.getElementById("info").innerHTML = "SUEDE TOP";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('top'), 'mouseout', function(event){
+	           document.getElementById("info").innerHTML = "";
+            }, false);
+            
+/*            root.traverse( function ( child ) {
+                        
+                domEvents.addEventListener(child, 'mouseover', function(event){
+	               hovered = true;
+                }, false);
+                domEvents.addEventListener(child, 'mouseout', function(event){
+	               hovered = false;
+                }, false);
+                        
+                    } );*/
         });
 
        //LIGHTING
@@ -135,15 +160,17 @@ canvas {
             if(mixer && animations) {
                 mixer.update(delta);
                 
-                console.log(mixer.clipAction( animations[0] ).time);
                 if (hovered == true) {
+                    
+                    pivot.rotation.y += 0.005;
+                    
                     animations.forEach( function ( clip ) {
                         
                         if(mixer.clipAction(clip).time >= 2.3) {
                             mixer.clipAction( clip ).timeScale = 0;
                         }else{
                             mixer.clipAction( clip ).play();
-                            mixer.clipAction( clip ).timeScale = 5;
+                            mixer.clipAction( clip ).timeScale = 4;
                         }
                         
                     } );
@@ -153,12 +180,12 @@ canvas {
                             mixer.clipAction( clip ).timeScale = 0;
                         }else{
                             mixer.clipAction( clip ).play();
-                            mixer.clipAction( clip ).timeScale = -5;
+                            mixer.clipAction( clip ).timeScale = -4;
                         }
                     } );
                 }
             }
-            if (pivot) {
+            if (pivot && hovered == false) {
                 pivot.rotation.y += 0.01;
             }
 
