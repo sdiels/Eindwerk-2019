@@ -29,6 +29,11 @@ class HomeController extends Controller
         return view('home');
     }
     
+    public function ar()
+    {
+        return view('ar');
+    }
+    
     public function storeMail(Request $request)
     {
         

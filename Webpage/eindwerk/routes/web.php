@@ -13,5 +13,6 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/ar', 'HomeController@ar')->name('ar');
 
 Route::post('/storeMail', 'HomeController@storeMail')->name('storeMail');
