@@ -36,6 +36,9 @@ class HomeController extends Controller
     
     public function storeMail(Request $request)
     {
+        $validatedData = $request->validate([
+        'email' => 'required|unique:mails',
+        ]);
         
         DB::table('mails')->insert(
             ['email' => $request->email]

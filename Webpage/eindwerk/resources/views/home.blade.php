@@ -56,6 +56,26 @@
         color: black;
         text-decoration: none;
     }
+    li {
+        list-style: none;
+    }
+    ul {
+        padding: 0;
+        margin: 0;
+        width: 300px;
+    }
+    .msg {
+        display: hidden;
+        margin-left: 24%;
+        padding: 0;
+        color: #de2222;
+    }
+    .msg.anim {
+        display: block;
+        overflow: hidden;
+        animation-name: notify;
+        animation-duration: 2s;
+    }
     
     canvas {
         display: block;
@@ -86,6 +106,25 @@
     
     #logo img {
         width: 300px;
+    }
+    
+    #info {
+        position: absolute;
+        right: 5vw;
+        top: 45vh;
+        text-align: right;
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+    }
+    #infoTxt {
+        width: 300px;
+    }
+    
+    #info.anim {
+        overflow: hidden;
+        animation-name: info;
+        animation-duration: 0.5s;
     }
     
     #release,
@@ -208,6 +247,15 @@
         }
     }
     
+    @keyframes info {
+        0% {
+            width: 0px;
+        }
+        100% {
+            width: 300px;
+        }
+    }
+    
     @keyframes loaded {
         0% {
             opacity: 1;
@@ -298,6 +346,15 @@
         <a id="notify" data-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseForm">
             <h1>NOTIFY ME</h1>
         </a>
+        @if ($errors->any())
+        <div class="msg">
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
         <div class="collapse" id="collapseForm">
             <form class="mail-form" action="{{ route('storeMail') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -312,7 +369,9 @@
             </form>
         </div>
     </div>
-    <h3 id="info"></h3>
+    <div id="info">
+        <h3 id="infoTxt"></h3>
+    </div>
 
     <script>
         //SET BASIC VARIABLES FOR VIEWPORT
@@ -347,20 +406,144 @@
         //VARIABLES
         var root, pivot;
         var hovered = false;
+        var element = document.getElementById("info");
+        var info = document.getElementById("infoTxt");
 
         const domEvents = new THREEx.DomEvents(camera, renderer.domElement);
         var mixer;
         var animations;
 
+        //MAKE CIRCLE FOR HOVER
+        var geometry = new THREE.CircleGeometry(0.8, 10);
+        var material = new THREE.MeshBasicMaterial({
+            color: 0x0000ff,
+            transparent: true,
+            opacity: 0.0
+        });
+        var circle = new THREE.Mesh(geometry, material);
+        circle.position.set(0, 0, -1.5);
+        scene.add(circle);
+
+        if (window.innerWidth <= window.innerHeight) {
+
+        } else {
+            domEvents.addEventListener(circle, 'mouseover', function(event) {
+                hovered = true;
+            }, false);
+            domEvents.addEventListener(circle, 'mouseout', function(event) {
+                hovered = false;
+                info.innerHTML = "";
+            }, false);
+        }
+
         //LOAD GLTF MODEL
         const gltfLoader = new THREE.GLTFLoader();
         gltfLoader.load('{{ URL::asset("models/model_anim2.glb") }}', (gltf) => {
             root = gltf.scene;
+
+            domEvents.addEventListener(root.getObjectByName('upper'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "MESH UPPER";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('back'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SUEDE HEEL";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('back-top'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "REFLECTIVE TOP";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('back2'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SUEDE REINFORCEMENTS";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('midsole'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SECOND SOLE";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('sole'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SOLE";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('swooshleft1'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "LEATHER SWOOSH";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('swooshleft2'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "REFLECTIVE SWOOSH";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('swooshright1'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "LEATHER SWOOSH";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('swooshright2'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "REFLECTIVE SWOOSH";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('toe1'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SUEDE TOE";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('toe2'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SUEDE REINFORCEMENTS";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('tongue'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "RETRO FOAM TONGUE";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('top'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SUEDE UPPER";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('top2'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SUEDE REINFORCEMENTS";
+            }, false);
+            domEvents.addEventListener(root.getObjectByName('top3'), 'click', function(event) {
+                element.classList.remove("anim");
+                element.offsetWidth;
+                element.classList.add("anim");
+                info.innerHTML = "SUEDE REINFORCEMENTS";
+            }, false);
+
+            //SET HOVER EVENTS
             if (window.innerWidth <= window.innerHeight) {
                 root.scale.set(0.5, 0.5, 0.5);
                 root.position.set(0, -0.2, 0.25);
 
-                root.traverse(function(child) {
+                /*root.traverse(function(child) {
 
                     domEvents.addEventListener(child, 'click', function(event) {
                         if (hovered) {
@@ -378,17 +561,18 @@
                     } else {
                         hovered = true;
                     }
-                }, false);
+                }, false);*/
             } else {
                 root.position.set(0, -0.4, 0.5);
 
-                domEvents.addEventListener(root.getObjectByName('upper'), 'mouseover', function(event) {
+                /*domEvents.addEventListener(root.getObjectByName('upper'), 'mouseover', function(event) {
                     hovered = true;
                 }, false);
                 domEvents.addEventListener(root.getObjectByName('upper'), 'mouseout', function(event) {
                     hovered = false;
-                }, false);
+                }, false);*/
             }
+
             pivot = new THREE.Object3D();
             pivot.add(root);
             scene.add(pivot);
@@ -396,14 +580,6 @@
             mixer = new THREE.AnimationMixer(pivot);
             animations = gltf.animations;
 
-            //SET HOVER ACTIONS
-
-            domEvents.addEventListener(root.getObjectByName('top'), 'mouseover', function(event) {
-                document.getElementById("info").innerHTML = "SUEDE TOP";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('top'), 'mouseout', function(event) {
-                document.getElementById("info").innerHTML = "";
-            }, false);
 
             /*            root.traverse( function ( child ) {
                                     
@@ -420,6 +596,7 @@
             document.querySelector("#logo").classList.add("anim");
             document.querySelector("#release").classList.add("anim");
             document.querySelector("h1").classList.add("anim");
+            document.querySelector(".msg").classList.add("anim");
         });
 
         //LIGHTING
@@ -454,6 +631,8 @@
                         }
 
                     });
+
+                    circle.scale.set(2.5, 1.5, 1.0);
                 } else {
                     animations.forEach(function(clip) {
                         if (mixer.clipAction(clip).time <= 0.2) {
@@ -463,6 +642,8 @@
                             mixer.clipAction(clip).timeScale = -4;
                         }
                     });
+
+                    circle.scale.set(1.5, 0.8, 1);
                 }
             }
             if (pivot && hovered == false) {
