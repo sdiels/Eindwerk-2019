@@ -73,7 +73,7 @@ MonoBehaviour:
   m_MinSize: {x: 887, y: 498}
   m_MaxSize: {x: 16012, y: 14048}
   vertical: 0
-  controlID: 11
+  controlID: 23
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_MinSize: {x: 610, y: 498}
   m_MaxSize: {x: 12010, y: 14048}
   vertical: 1
-  controlID: 12
+  controlID: 24
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_MinSize: {x: 610, y: 224}
   m_MaxSize: {x: 12010, y: 4024}
   vertical: 0
-  controlID: 13
+  controlID: 25
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -290,8 +290,8 @@ MonoBehaviour:
     y: 0
     width: 710
     height: 519
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 224}
+  m_MaxSize: {x: 4004, y: 4024}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -444,20 +444,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Android Icons
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Android Icons
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\_KDG 3DE JAAR\_EINDWERK\Eindwerk-2019\AR-app\Eindwerk2019
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 77}
-    m_SelectedIDs: da270000
-    m_LastClickedID: 10202
-    m_ExpandedIDs: 00000000da2700008c2800006c29000074290000ae290000222b00005c2c000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 862d0000
+    m_LastClickedID: 11654
+    m_ExpandedIDs: 00000000dc270000f0280000d0290000d8290000482d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -485,7 +485,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000da2700008c2800006c29000074290000ae290000222b00005c2c0000
+    m_ExpandedIDs: 00000000dc270000f0280000d0290000d8290000122a0000862b0000482d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -606,7 +606,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 9eadffffb8adffffc2adfffffcaeffff16afffff2cafffff1cb0ffff6ab0ffff84b0ffff8eb0ffffd0b0ffffeab0ffff3eb3ffffcab3ffffe4b3ffff38b6ffffc4b6ffffdeb6ffffe8b6ffff2ec7ffff48c7ffff9cc9ffffe8caffff02cbffff56cdffff94d2ffffaed2ffffb8d2ffffb0d3ffffcad3ffffd4d3ffff16d4ffff30d4ffff3ad4ffff8ad5ffffa4d5ffffb4d5ffffb0d9ffff70dcffff8adcffff94dcffffd6dcfffff0dcfffffadcffff12deffff2cdeffff36deffff78deffff92deffff9cdeffff00e0ffff1ae0ffff24e0ffff66e0ffff80e0ffffe0e2ffff46e5ffff60e5ffff6ae5ffffeee7ffff08e8ffff12e8ffffaee9ffffc8e9ffffd2e9ffff32eeffff4ceeffffa0f0ffffa4faffffb8fbffff4e2b0000942e000024300000d6350000863b00009c3f00002c410000644c0000d4620000e667000036760000047b0000ce7f000082930000c2930000ec9700000e990000
+      m_ExpandedIDs: eaf1ffff04f2ffff64f4ffffb8fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

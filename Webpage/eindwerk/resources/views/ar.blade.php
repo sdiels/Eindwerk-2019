@@ -73,7 +73,7 @@
         position: absolute;
         width: 80vw;
         left: 10vw;
-        top: 45vh;
+        top: 43vh;
         text-align: center;
         color: white;
     }
