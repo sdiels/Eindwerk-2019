@@ -20,9 +20,15 @@
 </head>
 <style>
     @font-face {
-        font-family: 'futura';
-        src: url('{{ URL::asset("fonts/futura.ttf") }}');
-    }
+    font-family: 'Futura';
+    src: url('{{ URL::asset("fonts/Futura-Bold.eot") }}');
+    src: url('{{ URL::asset("fonts/Futura-Bold.eot?#iefix") }}') format('embedded-opentype'),
+        url('{{ URL::asset("fonts/Futura-Bold.woff2") }}') format('woff2'),
+        url('{{ URL::asset("fonts/Futura-Bold.woff") }}') format('woff'),
+        url('{{ URL::asset("fonts/Futura-Bold.ttf") }}') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
     
     #bg {
         position: absolute;
@@ -45,6 +51,7 @@
         height: 100vh;
         font-family: 'futura', sans-serif;
         color: black;
+        background-color: #e5e5e5;
     }
     
     a {
@@ -267,31 +274,24 @@
         }
     }
     
-    @media only screen and (max-width: 768px) {
-        #shadow {
-            bottom: 40%;
-            left: 15%;
-            width: 70%;
-        }
-    }
-    
     @media only screen and (max-width: 1000px) {
         #shadow {
-            bottom: 25%;
-            left: 15%;
-            width: 70%;
+            bottom: 34%;
+            left: 20%;
+            width: 60%;
         }
         #overlay,
         #overlay-text {
-            width: 50vw;
+            width: 32vw;
             text-align: center;
-            margin: 5vh 25vw;
+            margin: 2vh 34vw;
+            max-height: 20vh;
         }
         #overlay-text {
             width: 70vw;
             text-align: center;
             margin: 0 15vw;
-            top: 80vh;
+            top: 70vh;
         }
         #release,
         #overlay-text h1,
@@ -300,11 +300,8 @@
             margin-left: 0;
             margin: auto;
         }
-        #logo {
-            width: 50vw;
-        }
-        #logo img {
-            width: 50vw;
+        #logo, #logo img {
+            width: 32vw;
         }
         @keyframes logo {
             0% {
@@ -314,7 +311,7 @@
                 width: 0px;
             }
             50% {
-                width: 50vw;
+                width: 32vw;
             }
         }
         #mail-form {
@@ -441,6 +438,34 @@
         gltfLoader.load('{{ URL::asset("models/model_anim2.glb") }}', (gltf) => {
             root = gltf.scene;
 
+            //SET HOVER EVENTS
+            if (window.innerWidth <= window.innerHeight) {
+                root.scale.set(0.5, 0.5, 0.5);
+                root.position.set(0, -0.05, 0.25);
+
+                root.traverse(function(child) {
+
+                    domEvents.addEventListener(child, 'click', function(event) {
+                        if (hovered) {
+                            hovered = false;
+                        } else {
+                            hovered = true;
+                        }
+                    }, false);
+
+                });
+
+                domEvents.addEventListener(root.getObjectByName('upper'), 'touchstart', function(event) {
+                    if (hovered) {
+                        hovered = false;
+                    } else {
+                        hovered = true;
+                    }
+                }, false);
+            } else {
+                root.position.set(0, -0.4, 0.5);
+
+                //DESKTOP CLICK EVENTS
             domEvents.addEventListener(root.getObjectByName('upper'), 'click', function(event) {
                 element.classList.remove("anim");
                 element.offsetWidth;
@@ -537,40 +562,6 @@
                 element.classList.add("anim");
                 info.innerHTML = "SUEDE REINFORCEMENTS";
             }, false);
-
-            //SET HOVER EVENTS
-            if (window.innerWidth <= window.innerHeight) {
-                root.scale.set(0.5, 0.5, 0.5);
-                root.position.set(0, -0.2, 0.25);
-
-                /*root.traverse(function(child) {
-
-                    domEvents.addEventListener(child, 'click', function(event) {
-                        if (hovered) {
-                            hovered = false;
-                        } else {
-                            hovered = true;
-                        }
-                    }, false);
-
-                });
-
-                domEvents.addEventListener(root.getObjectByName('upper'), 'touchstart', function(event) {
-                    if (hovered) {
-                        hovered = false;
-                    } else {
-                        hovered = true;
-                    }
-                }, false);*/
-            } else {
-                root.position.set(0, -0.4, 0.5);
-
-                /*domEvents.addEventListener(root.getObjectByName('upper'), 'mouseover', function(event) {
-                    hovered = true;
-                }, false);
-                domEvents.addEventListener(root.getObjectByName('upper'), 'mouseout', function(event) {
-                    hovered = false;
-                }, false);*/
             }
 
             pivot = new THREE.Object3D();

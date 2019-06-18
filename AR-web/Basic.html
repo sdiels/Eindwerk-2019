@@ -7,7 +7,43 @@
 <script src="artoolkit/three.js/build/ar.js"></script>
 <script>THREEx.ArToolkitContext.baseURL = 'artoolkit/'</script>
 
-<body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
+<style>
+    #overlay{
+            width: 32vw;
+            margin: 2vh 34vw;
+            max-height: 20vh;
+        position: absolute;
+        z-index: 100;
+        opacity: 0.5;
+        }
+    
+    #overlay-text {
+        bottom: 0vh;
+        width: 100vw;
+        height: 20vh;
+        text-align: center;
+        max-height: 20vh;
+        position: absolute;
+        z-index: 100;
+        background-image: url(gradient.png);
+        background: cover;
+    }
+    
+        #logo, #logo img {
+            width: 32vw;
+        }
+</style>
+
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+    <div id="overlay">
+        <div id="logo">
+            <img src="logo-white.png" alt="logo">
+        </div>
+    </div>
+    <div id="overlay-text">
+            <h1>I WANT 'EM</h1>
+    </div>
+<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
 
 <script>
 	// init renderer
@@ -72,7 +108,7 @@
 	// init controls for camera
 	var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
 		type : 'pattern',
-		patternUrl : THREEx.ArToolkitContext.baseURL + '/data/data/patt.hiro',
+		patternUrl : THREEx.ArToolkitContext.baseURL + '/data/data/marker.hiro',
         
 		changeMatrixMode: 'cameraTransformMatrix'
 	})
@@ -122,4 +158,4 @@
 			onRenderFct(deltaMsec/1000, nowMsec/1000)
 		})
 	})
-</script></body>
+    </script></div></body>
