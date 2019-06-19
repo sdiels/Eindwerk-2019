@@ -20,15 +20,15 @@
 </head>
 <style>
     @font-face {
-    font-family: 'Futura';
-    src: url('{{ URL::asset("fonts/Futura-Bold.eot") }}');
-    src: url('{{ URL::asset("fonts/Futura-Bold.eot?#iefix") }}') format('embedded-opentype'),
+        font-family: 'Futura';
+        src: url('{{ URL::asset("fonts/Futura-Bold.eot") }}');
+        src: url('{{ URL::asset("fonts/Futura-Bold.eot?#iefix") }}') format('embedded-opentype'),
         url('{{ URL::asset("fonts/Futura-Bold.woff2") }}') format('woff2'),
         url('{{ URL::asset("fonts/Futura-Bold.woff") }}') format('woff'),
         url('{{ URL::asset("fonts/Futura-Bold.ttf") }}') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-}
+        font-weight: 500;
+        font-style: normal;
+    }
     
     #bg {
         position: absolute;
@@ -38,11 +38,38 @@
         width: 100vw;
         opacity: 1;
         background-color: #e5e5e5;
+        z-index: 100;
     }
     
     .loaded {
         animation-name: loaded;
         animation-duration: 3s;
+        visibility: hidden;
+    }
+    
+    #loader {
+        margin: 45vh auto;
+        width: 100px;
+        height: 100px;
+    }
+    
+    #loader img {
+        width: 100px;
+    }
+    
+    #hint {
+        position: absolute;
+        width: 50vw;
+        top: 6vh;
+        left: 25vw;
+        z-index: 50;
+        text-align: center;
+        animation-name: hint;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+    }
+    
+    .done {
         visibility: hidden;
     }
     
@@ -63,20 +90,31 @@
         color: black;
         text-decoration: none;
     }
+    
     li {
         list-style: none;
     }
+    
     ul {
         padding: 0;
         margin: 0;
         width: 300px;
     }
+    
     .msg {
         display: hidden;
-        margin-left: 24%;
+        margin-left: 20%;
         padding: 0;
-        color: #de2222;
     }
+    .msg p {
+        width: 350px;
+    }
+    .msg .error {
+        color: #de2222;
+    }.msg .success {
+        color: #12ef67;
+    }
+    
     .msg.anim {
         display: block;
         overflow: hidden;
@@ -92,7 +130,7 @@
     #overlay-text {
         position: absolute;
         z-index: 100;
-        width: 400px;
+        width: 465px;
     }
     
     #overlay-text {
@@ -100,7 +138,8 @@
     }
     
     #logo {
-        width: 300px;
+        width: 5vw;
+        margin-left: 100px;
         display: none;
     }
     
@@ -112,7 +151,7 @@
     }
     
     #logo img {
-        width: 300px;
+        width: 5vw;
     }
     
     #info {
@@ -124,6 +163,7 @@
         height: 300px;
         overflow: hidden;
     }
+    
     #infoTxt {
         width: 300px;
     }
@@ -138,7 +178,7 @@
     #overlay-text h1,
     .mail-form {
         font-weight: bold;
-        margin-left: 24%;
+        margin-left: 20%;
     }
     
     .mail-form {
@@ -197,6 +237,7 @@
         border: none;
         padding: 2px;
         border-bottom: 1px solid;
+        height: 43px;
     }
     /* Change the white to any color ;) */
     
@@ -213,9 +254,13 @@
     }
     
     #submit {
-        border: 2px black solid;
+        border: none;
         color: white;
+        margin: 0;
+        padding: 10px 20px;
         background-color: black;
+        border-radius: 40px;
+        width: auto;
     }
     
     @keyframes logo {
@@ -226,7 +271,7 @@
             width: 0%;
         }
         50% {
-            width: 300px;
+            width: 5vw;
         }
     }
     
@@ -274,24 +319,59 @@
         }
     }
     
+    @keyframes hint {
+        0% {
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 0.1;
+        }
+        100% {
+            opacity: 0.5;
+        }
+    }
+    
+    #ar {
+        position: absolute;
+        z-index: 50;
+        bottom: 5vh;
+        left: 100px;
+    }
+    
+    #ar p,
+    #ar-mobile p {
+        color: white;
+        margin: 0;
+        padding: 10px 20px;
+        background-color: black;
+        border-radius: 40px;
+    }
+    
+    #ar-mobile {
+        visibility: hidden;
+    }
+    
     @media only screen and (max-width: 1000px) {
         #shadow {
             bottom: 34%;
             left: 20%;
             width: 60%;
         }
+        #hint {
+            top: 20vh;
+        }
         #overlay,
         #overlay-text {
-            width: 32vw;
+            width: 8vw;
             text-align: center;
-            margin: 2vh 34vw;
+            margin: 2vh 46vw;
             max-height: 20vh;
+            z-index: 50;
         }
         #overlay-text {
             width: 70vw;
-            text-align: center;
             margin: 0 15vw;
-            top: 70vh;
+            top: 67vh;
         }
         #release,
         #overlay-text h1,
@@ -300,8 +380,10 @@
             margin-left: 0;
             margin: auto;
         }
-        #logo, #logo img {
-            width: 32vw;
+        #logo,
+        #logo img {
+            width: 8vw;
+            margin-left: 0;
         }
         @keyframes logo {
             0% {
@@ -311,7 +393,7 @@
                 width: 0px;
             }
             50% {
-                width: 32vw;
+                width: 8vw;
             }
         }
         #mail-form {
@@ -323,6 +405,27 @@
             font-size: 30px;
             width: 100%;
         }
+        #email {
+            height: 65px;
+        }
+        #ar {
+            visibility: hidden;
+        }
+        #ar-mobile {
+            visibility: visible;
+            font-size: 3vw;
+            z-index: 50;
+            width: 40vw;
+            margin: 5vh auto 0 auto;
+        }
+        .msg {
+            margin-left: 0;
+            margin: auto;
+        }.msg p {
+            width: 350px;
+            margin: auto;
+            text-align: center;
+        }
     }
 
 </style>
@@ -330,6 +433,12 @@
 <body>
     <img id="shadow" src="{{ URL::asset('img/shadow.png') }}" alt="shadow">
     <div id="bg">
+        <div id="loader">
+            <img src="{{ URL::asset('img/loader.gif')}}" alt="loading">
+        </div>
+    </div>
+    <div id="hint">
+        <p>MOVE YOUR MOUSE OVER THE SNEAKER</p>
     </div>
     <div id="overlay">
         <div id="logo">
@@ -345,11 +454,14 @@
         </a>
         @if ($errors->any())
         <div class="msg">
-            <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-            </ul>
+                @foreach ($errors->all() as $error)
+                <p class="error">{{ $error }}</p>
+                @endforeach
+                @if(session()->has('message'))
+                <p class="success">
+                    {{ session()->get('message') }}
+                </p>
+                @endif
         </div>
         @endif
         <div class="collapse" id="collapseForm">
@@ -365,6 +477,16 @@
                 </div>
             </form>
         </div>
+        <div id="ar-mobile">
+            <a href="https://play.google.com/store/apps/details?id=com.nike.omega&hl=nl">
+                <p>Try them on in AR.</p>
+            </a>
+        </div>
+    </div>
+    <div id="ar">
+        <a id="ar-link" href="https://play.google.com/store/apps/details?id=com.nike.omega&hl=nl">
+            <p>Try them on in AR.</p>
+        </a>
     </div>
     <div id="info">
         <h3 id="infoTxt"></h3>
@@ -405,6 +527,7 @@
         var hovered = false;
         var element = document.getElementById("info");
         var info = document.getElementById("infoTxt");
+        var hint = document.querySelector("#hint p");
 
         const domEvents = new THREEx.DomEvents(camera, renderer.domElement);
         var mixer;
@@ -421,18 +544,6 @@
         circle.position.set(0, 0, -1.5);
         scene.add(circle);
 
-        if (window.innerWidth <= window.innerHeight) {
-
-        } else {
-            domEvents.addEventListener(circle, 'mouseover', function(event) {
-                hovered = true;
-            }, false);
-            domEvents.addEventListener(circle, 'mouseout', function(event) {
-                hovered = false;
-                info.innerHTML = "";
-            }, false);
-        }
-
         //LOAD GLTF MODEL
         const gltfLoader = new THREE.GLTFLoader();
         gltfLoader.load('{{ URL::asset("models/model_anim2.glb") }}', (gltf) => {
@@ -443,14 +554,18 @@
                 root.scale.set(0.5, 0.5, 0.5);
                 root.position.set(0, -0.05, 0.25);
 
+                hint.innerHTML = "TAP TO EXPAND";
+
                 root.traverse(function(child) {
 
                     domEvents.addEventListener(child, 'click', function(event) {
+
                         if (hovered) {
                             hovered = false;
                         } else {
                             hovered = true;
                         }
+
                     }, false);
 
                 });
@@ -460,108 +575,119 @@
                         hovered = false;
                     } else {
                         hovered = true;
+                        hint.innerHTML = "";
                     }
                 }, false);
             } else {
                 root.position.set(0, -0.4, 0.5);
 
+                domEvents.addEventListener(circle, 'mouseover', function(event) {
+                    hovered = true;
+                    hint.innerHTML = 'CLICK TO GET MORE INFO';
+                }, false);
+                domEvents.addEventListener(circle, 'mouseout', function(event) {
+                    hovered = false;
+                    info.innerHTML = "";
+                    hint.innerHTML = 'MOVE YOUR MOUSE OVER THE SNEAKER';
+                }, false);
+
                 //DESKTOP CLICK EVENTS
-            domEvents.addEventListener(root.getObjectByName('upper'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "MESH UPPER";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('back'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SUEDE HEEL";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('back-top'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "REFLECTIVE TOP";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('back2'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SUEDE REINFORCEMENTS";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('midsole'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SECOND SOLE";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('sole'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SOLE";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('swooshleft1'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "LEATHER SWOOSH";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('swooshleft2'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "REFLECTIVE SWOOSH";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('swooshright1'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "LEATHER SWOOSH";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('swooshright2'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "REFLECTIVE SWOOSH";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('toe1'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SUEDE TOE";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('toe2'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SUEDE REINFORCEMENTS";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('tongue'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "RETRO FOAM TONGUE";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('top'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SUEDE UPPER";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('top2'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SUEDE REINFORCEMENTS";
-            }, false);
-            domEvents.addEventListener(root.getObjectByName('top3'), 'click', function(event) {
-                element.classList.remove("anim");
-                element.offsetWidth;
-                element.classList.add("anim");
-                info.innerHTML = "SUEDE REINFORCEMENTS";
-            }, false);
+                domEvents.addEventListener(root.getObjectByName('upper'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "MESH UPPER";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('back'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SUEDE HEEL";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('back-top'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "REFLECTIVE TOP";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('back2'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SUEDE REINFORCEMENTS";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('midsole'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SECOND SOLE";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('sole'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SOLE";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('swooshleft1'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "LEATHER SWOOSH";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('swooshleft2'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "REFLECTIVE SWOOSH";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('swooshright1'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "LEATHER SWOOSH";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('swooshright2'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "REFLECTIVE SWOOSH";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('toe1'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SUEDE TOE";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('toe2'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SUEDE REINFORCEMENTS";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('tongue'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "RETRO FOAM TONGUE";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('top'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SUEDE UPPER";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('top2'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SUEDE REINFORCEMENTS";
+                }, false);
+                domEvents.addEventListener(root.getObjectByName('top3'), 'click', function(event) {
+                    element.classList.remove("anim");
+                    element.offsetWidth;
+                    element.classList.add("anim");
+                    info.innerHTML = "SUEDE REINFORCEMENTS";
+                }, false);
             }
 
             pivot = new THREE.Object3D();
@@ -584,6 +710,7 @@
                                 } );*/
 
             document.querySelector("#bg").classList.add("loaded");
+            document.querySelector("#loader").classList.add("done");
             document.querySelector("#logo").classList.add("anim");
             document.querySelector("#release").classList.add("anim");
             document.querySelector("h1").classList.add("anim");
