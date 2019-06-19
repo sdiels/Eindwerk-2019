@@ -63,6 +63,7 @@
     <Compile Include="Assets\Anim.cs" />
     <Compile Include="Assets\Rotate.cs" />
     <Compile Include="Assets\Scripts\InputHandler.cs" />
+    <Compile Include="Assets\Scripts\NativeScreenshotShare.cs" />
     <None Include="Assets\Vuforia\Shaders\ColoredLines.shader" />
     <None Include="Assets\Vuforia\Shaders\CameraDiffuse.shader" />
     <None Include="Assets\StreamingAssets\Vuforia\VuforiaMars_ModelTarget.xml" />
@@ -649,6 +650,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{3F00D878-294B-1752-C827-9673B94002CA}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
     <ProjectReference Include="VuforiaScripts.csproj">
       <Project>{B12A7A1C-84C7-E9D3-52DB-73C86B72E0AB}</Project>
       <Name>VuforiaScripts</Name>

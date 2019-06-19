@@ -1,0 +1,402 @@
+ @font-face {
+        font-family: 'futura';
+        src: url('{{ URL::asset("fonts/futura.ttf") }}');
+    }
+    
+    #bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 100vw;
+        opacity: 1;
+        background-color: #e5e5e5;
+        z-index: 100;
+    }
+    
+    .loaded {
+        animation-name: loaded;
+        animation-duration: 3s;
+        visibility: hidden;
+    }
+    
+    #loader {
+        margin: 45vh auto;
+        width: 100px;
+        height: 100px;
+    }
+    
+    #loader img {
+        width: 100px;
+    }
+    
+    #hint {
+        position: absolute;
+        width: 50vw;
+        top: 6vh;
+        left: 25vw;
+        z-index: 50;
+        text-align: center;
+        animation-name: hint;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+    }
+    
+    .done {
+        visibility: hidden;
+    }
+    
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: 'futura';
+        color: black;
+        background-color: #e5e5e5;
+    }
+    
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+    
+    li {
+        list-style: none;
+    }
+    
+    ul {
+        padding: 0;
+        margin: 0;
+        width: 300px;
+    }
+    
+    .msg {
+        display: hidden;
+        margin-left: 20%;
+        padding: 0;
+    }
+    .msg p {
+        width: 350px;
+    }
+    .msg .error {
+        color: #de2222;
+    }.msg .success {
+        color: #12ef67;
+    }
+    
+    .msg.anim {
+        display: block;
+        overflow: hidden;
+        animation-name: notify;
+        animation-duration: 2s;
+    }
+    
+    canvas {
+        display: block;
+    }
+    
+    #overlay,
+    #overlay-text {
+        position: absolute;
+        z-index: 100;
+        width: 465px;
+    }
+    
+    #overlay-text {
+        top: 35vh;
+    }
+    
+    #logo {
+        width: 5vw;
+        margin-left: 100px;
+        display: none;
+    }
+    
+    #logo.anim {
+        display: block;
+        overflow: hidden;
+        animation-name: logo;
+        animation-duration: 2s;
+    }
+    
+    #logo img {
+        width: 5vw;
+    }
+    
+    #info {
+        position: absolute;
+        right: 5vw;
+        top: 45vh;
+        text-align: right;
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+    }
+    
+    #infoTxt {
+        width: 300px;
+    }
+    
+    #info.anim {
+        overflow: hidden;
+        animation-name: info;
+        animation-duration: 0.5s;
+    }
+    
+    #release,
+    #overlay-text h1,
+    .mail-form {
+        font-weight: bold;
+        margin-left: 20%;
+    }
+    
+    .mail-form {
+        padding-top: 5px;
+    }
+    
+    #overlay-text h2 {
+        font-size: 25px;
+        height: 30px;
+        width: 300px;
+        margin: 0;
+    }
+    
+    #release {
+        display: none;
+    }
+    
+    #release.anim {
+        display: block;
+        overflow: hidden;
+        animation-name: release;
+        animation-duration: 2s;
+    }
+    
+    #overlay-text h1 {
+        display: none;
+        font-size: 90px;
+        line-height: 80px;
+        width: 350px;
+    }
+    
+    #overlay-text h1.anim {
+        display: block;
+        overflow: hidden;
+        animation-name: notify;
+        animation-duration: 2s;
+    }
+    
+    #shadow {
+        position: absolute;
+        bottom: 5%;
+        left: 35%;
+        width: 30%;
+        opacity: 0.3;
+    }
+    
+    h3 {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    
+    #email {
+        width: 110%;
+        background-color: rgba(255, 255, 255, 0);
+        border: none;
+        padding: 2px;
+        border-bottom: 1px solid;
+        height: 43px;
+    }
+    /* Change the white to any color ;) */
+    
+    #email:-webkit-autofill,
+    #email:-webkit-autofill:hover,
+    #email:-webkit-autofill:focus,
+    #email:-webkit-autofill:active,
+    #email::-internal-autofill-selected {
+        -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0) inset !important;
+    }
+    
+    #email:focus {
+        outline: none;
+    }
+    
+    #submit {
+        border: none;
+        color: white;
+        margin: 0;
+        padding: 10px 20px;
+        background-color: black;
+        border-radius: 40px;
+        width: auto;
+    }
+    
+    @keyframes logo {
+        0% {
+            width: 0%;
+        }
+        25% {
+            width: 0%;
+        }
+        50% {
+            width: 5vw;
+        }
+    }
+    
+    @keyframes release {
+        0% {
+            width: 0px;
+        }
+        50% {
+            width: 0px;
+        }
+        75% {
+            width: 300px;
+        }
+    }
+    
+    @keyframes notify {
+        0% {
+            width: 0px;
+        }
+        75% {
+            width: 0px;
+        }
+        100% {
+            width: 350px;
+        }
+    }
+    
+    @keyframes info {
+        0% {
+            width: 0px;
+        }
+        100% {
+            width: 300px;
+        }
+    }
+    
+    @keyframes loaded {
+        0% {
+            opacity: 1;
+            visibility: visible;
+        }
+        100% {
+            opacity: 0;
+            visibility: visible;
+        }
+    }
+    
+    @keyframes hint {
+        0% {
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 0.1;
+        }
+        100% {
+            opacity: 0.5;
+        }
+    }
+    
+    #ar {
+        position: absolute;
+        z-index: 50;
+        bottom: 5vh;
+        left: 100px;
+    }
+    
+    #ar p,
+    #ar-mobile p {
+        color: white;
+        margin: 0;
+        padding: 10px 20px;
+        background-color: black;
+        border-radius: 40px;
+    }
+    
+    #ar-mobile {
+        visibility: hidden;
+    }
+    
+    @media only screen and (max-width: 1000px) {
+        #shadow {
+            bottom: 34%;
+            left: 20%;
+            width: 60%;
+        }
+        #hint {
+            top: 20vh;
+        }
+        #overlay,
+        #overlay-text {
+            width: 8vw;
+            text-align: center;
+            margin: 2vh 46vw;
+            max-height: 20vh;
+            z-index: 50;
+        }
+        #overlay-text {
+            width: 70vw;
+            margin: 0 15vw;
+            top: 67vh;
+        }
+        #release,
+        #overlay-text h1,
+        #overlay-text h2,
+        .mail-form {
+            margin-left: 0;
+            margin: auto;
+        }
+        #logo,
+        #logo img {
+            width: 8vw;
+            margin-left: 0;
+        }
+        @keyframes logo {
+            0% {
+                width: 0px;
+            }
+            25% {
+                width: 0px;
+            }
+            50% {
+                width: 8vw;
+            }
+        }
+        #mail-form {
+            padding-top: 2vh;
+        }
+        .emailcol,
+        .submitcol {
+            line-height: 50px;
+            font-size: 30px;
+            width: 100%;
+        }
+        #email {
+            height: 65px;
+        }
+        #ar {
+            visibility: hidden;
+        }
+        #ar-mobile {
+            visibility: visible;
+            font-size: 3vw;
+            z-index: 50;
+            width: 40vw;
+            margin: 5vh auto 0 auto;
+        }
+        .msg {
+            margin-left: 0;
+            margin: auto;
+        }.msg p {
+            width: 350px;
+            margin: auto;
+            text-align: center;
+        }
+    }

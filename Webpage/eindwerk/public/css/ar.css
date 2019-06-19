@@ -1,0 +1,85 @@
+    @font-face {
+        font-family: 'futura';
+        src: url('{{ URL::asset("fonts/futura.ttf") }}');
+    }
+    
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+    
+    #overlay {
+        width: 32vw;
+        margin: 2vh 34vw;
+        max-height: 20vh;
+        position: absolute;
+        z-index: 100;
+        opacity: 0.5;
+    }
+    
+    #overlay-text {
+        bottom: 0vh;
+        width: 100vw;
+        height: 20vh;
+        text-align: center;
+        position: absolute;
+        z-index: 100;
+        background-size: cover;
+        font-family: 'futura';
+        font-size: 5vw;
+        opacity: 0;
+    }
+    
+    #overlay-text.anim {
+        opacity: 1;
+        animation-name: btn;
+        animation-duration: 1s;
+    }
+    
+    h1 {
+        width: 40vw;
+        margin: auto;
+        background-color: black;
+        color: white;
+        border-radius: 50px;
+        font-size: 20px;
+        padding: 10px;
+    }
+    
+    #logo,
+    #logo img {
+        width: 32vw;
+    }
+    #instruction {
+        position: absolute;
+        width: 80vw;
+        left: 10vw;
+        top: 43vh;
+        text-align: center;
+        color: white;
+    }
+    #instruction.gone {
+        visibility: hidden;
+    }
+    
+    @keyframes text {
+        0% {
+            width: 0vw;
+        }
+        100% {
+            width: 50vw;
+        }
+    }
+    @keyframes btn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<!-- three.js library -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.js'></script>
-<script src="{{ URL::asset('js/GLTFLoader.js') }}"></script>
-<!-- ar.js -->
-<script src="{{ URL::asset('artoolkit/three.js/build/ar.js') }}"></script>
-<script>
-    THREEx.ArToolkitContext.baseURL = '{{ URL::asset("artoolkit/") }}'
 
-</script>
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Nike AR Experience</title>
+
+    <!-- three.js library -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.js'></script>
+    <script src="{{ URL::asset('js/GLTFLoader.js') }}"></script>
+    <!-- ar.js -->
+    <script src="{{ URL::asset('artoolkit/three.js/build/ar.js') }}"></script>
+    <script>
+        THREEx.ArToolkitContext.baseURL = '{{ URL::asset("artoolkit/") }}'
+
+    </script>
+</head>
 
 <style>
     @font-face {
@@ -40,35 +46,35 @@
         width: 100vw;
         height: 20vh;
         text-align: center;
-        max-height: 20vh;
         position: absolute;
         z-index: 100;
-        background-image: url('{{ URL::asset("img/gradient.png") }}');
         background-size: cover;
         font-family: 'futura';
         font-size: 5vw;
+        opacity: 0;
+    }
+    
+    #overlay-text.anim {
+        opacity: 1;
+        animation-name: btn;
+        animation-duration: 1s;
     }
     
     h1 {
-        width: 50vw;
+        width: 40vw;
         margin: auto;
-    }#link {
-        margin: auto;
-        width: 0vw;
-        display: none;
-        overflow: hidden;
-    }#link.anim {
-        width: 50vw;
-        display: block;
-        overflow: hidden;
-        animation-name: text;
-        animation-duration: 2s;
+        background-color: black;
+        color: white;
+        border-radius: 50px;
+        font-size: 20px;
+        padding: 10px;
     }
     
     #logo,
     #logo img {
         width: 32vw;
     }
+    
     #instruction {
         position: absolute;
         width: 80vw;
@@ -77,6 +83,7 @@
         text-align: center;
         color: white;
     }
+    
     #instruction.gone {
         visibility: hidden;
     }
@@ -87,6 +94,15 @@
         }
         100% {
             width: 50vw;
+        }
+    }
+    
+    @keyframes btn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
         }
     }
 
@@ -101,7 +117,7 @@
     <h2 id="instruction">Point your camera at the Nike logo.</h2>
     <div id="overlay-text">
         <a id="link" href="{{route('home')}}">
-            <h1>I WANT 'EM</h1>
+            <h1>I want 'em</h1>
         </a>
     </div>
     <div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -165,7 +181,8 @@
 
                 // update scene.visible if the marker is seen
                 scene.visible = camera.visible
-                if(camera.visible) {
+                if (camera.visible) {
+                    document.getElementById("overlay-text").classList.add("anim");
                     document.getElementById("link").classList.add("anim");
                     document.getElementById("instruction").classList.add("gone");
                 }
@@ -193,17 +210,20 @@
             // Load GLTF model
             var pivot;
             const gltfLoader = new THREE.GLTFLoader();
-            gltfLoader.load('{{ URL::asset("models/model_anim2.glb")}}', (gltf) => {
+            gltfLoader.load('{{ URL::asset("models/ar_model.glb")}}', (gltf) => {
                 var root = gltf.scene;
                 root.position.set(0, -0.4, 0.5);
                 pivot = new THREE.Object3D();
                 pivot.rotation.x = -1.5;
+                pivot.position.set(0, 1, -0.1);
                 pivot.add(root);
                 scene.add(pivot);
             });
 
             onRenderFcts.push(function(delta) {
-                pivot.rotation.y += Math.PI * delta / 5;
+                if(pivot) {
+                    pivot.rotation.y += Math.PI * delta / 5;
+                }
             })
 
             // render the scene
